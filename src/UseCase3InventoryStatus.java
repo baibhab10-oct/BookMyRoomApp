@@ -1,6 +1,38 @@
-public class UseCase2RoomInitialization {
+public class UseCase3InventoryStatus {
 
-    abstract static class Room {
+    static class FacilityInventory {
+
+        private static FacilityInventory instance;
+
+        private int singleRoomCount = 5;
+        private int doubleRoomCount = 3;
+        private int suiteRoomCount = 2;
+
+        private FacilityInventory() {
+        }
+
+        public static FacilityInventory getInstance() {
+            if (instance == null) {
+                instance = new FacilityInventory();
+            }
+            return instance;
+        }
+
+        public int getSingleRoomCount() {
+            return singleRoomCount;
+        }
+
+        public int getDoubleRoomCount() {
+            return doubleRoomCount;
+        }
+
+        public int getSuiteRoomCount() {
+            return suiteRoomCount;
+        }
+    }
+
+    static abstract class Room {
+
         protected int numberOfBeds;
         protected int squareFeet;
         protected double pricePerNight;
@@ -38,21 +70,23 @@ public class UseCase2RoomInitialization {
 
     public static void main(String[] args) {
 
-        System.out.println("Hotel Room Initialization");
+        FacilityInventory inventory = FacilityInventory.getInstance();
+
+        System.out.println("Hotel Room Inventory Status");
 
         System.out.println("\nSingle Room:");
         Room single = new SingleRoom();
         single.displayRoomDetails();
-        System.out.println("Available: 5");
+        System.out.println("Available Rooms: " + inventory.getSingleRoomCount());
 
         System.out.println("\nDouble Room:");
         Room dbl = new DoubleRoom();
         dbl.displayRoomDetails();
-        System.out.println("Available: 3");
+        System.out.println("Available Rooms: " + inventory.getDoubleRoomCount());
 
         System.out.println("\nSuite Room:");
         Room suite = new SuiteRoom();
         suite.displayRoomDetails();
-        System.out.println("Available: 2");
+        System.out.println("Available Rooms: " + inventory.getSuiteRoomCount());
     }
 }
